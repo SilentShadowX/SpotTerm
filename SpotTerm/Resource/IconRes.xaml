@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:SpotTerm">
+    
+    <BitmapImage x:Key="info_icon" UriSource="icon/info_icon.png" />
+    <BitmapImage x:Key="check_icon" UriSource="icon/check_icon.png" />
+    <BitmapImage x:Key="delete_icon" UriSource="icon/delete_icon.png" />
+
+</ResourceDictionary>
