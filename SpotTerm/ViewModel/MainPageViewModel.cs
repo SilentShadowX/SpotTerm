@@ -303,7 +303,14 @@ namespace SpotTerm.ViewModel
                         new MetroDialogSettings() {AnimateShow = true, ColorScheme = MetroDialogColorScheme.Theme});
                     await Task.Delay(1100);
 
-                    CardList.Remove((Card) itemObj);
+                    if(CardList.Contains((Card) itemObj))
+                    {
+                        CardList.Remove((Card)itemObj);
+                    } else
+                    {
+                        CardListCompleted.Remove((Card) itemObj);
+                    }
+                    
 
                     if (controller != null)
                         await controller.CloseAsync();
