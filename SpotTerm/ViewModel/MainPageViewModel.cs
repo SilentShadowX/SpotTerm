@@ -12,6 +12,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using SpotTerm.Model;
 using SpotTerm.Utils;
+using SpotTerm.View;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace SpotTerm.ViewModel
@@ -30,6 +31,8 @@ namespace SpotTerm.ViewModel
 
         public ICommand LoadFromFile { get; set; }
         public ICommand SaveFromFile { get; set; }
+
+        public ICommand GoToMapCommand { get; set; }
 
         #endregion
 
@@ -124,6 +127,7 @@ namespace SpotTerm.ViewModel
             ShowInfoCommand = new RelayCommand(action => ShowInfoCard(action));
             LoadFromFile = new RelayCommand(action => LoadData(action));
             SaveFromFile = new RelayCommand(action => SaveData(action));
+            GoToMapCommand = new RelayCommand(action => GoToMap(action));
         }
 
         private async void SaveData(object action)
@@ -220,6 +224,12 @@ namespace SpotTerm.ViewModel
             return card.Status != PriorityStatus.Completed;
         }
 
+        public void GoToMap(object obj)
+        {
+            Card card = (Card) obj;
+            Navigation.NavigateTo(new MapPage(card.PlaceName));
+        }
+
         #endregion
 
         #region Methods
@@ -238,7 +248,10 @@ namespace SpotTerm.ViewModel
                     .Append(DisplayText.ToDescription(selectedCardItem.Priority))
                     .Append("\n")
                     .Append("Status: ")
-                    .Append(DisplayText.ToDescription(selectedCardItem.Status));
+                    .Append(DisplayText.ToDescription(selectedCardItem.Status))
+                    .Append("\n")
+                    .Append("Data rozpoczęcia: ")
+                    .Append(selectedCardItem.TimeStart);
 
                 if (selectedCardItem.TimeEnd != null)
                 {

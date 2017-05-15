@@ -1,0 +1,34 @@
+﻿<Page x:Class="SpotTerm.View.MapPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:SpotTerm.View"
+      xmlns:System="clr-namespace:System;assembly=mscorlib"
+      xmlns:converter="clr-namespace:SpotTerm.Utils.Converter"
+      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+      xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+      mc:Ignorable="d"
+      d:DesignHeight="720" d:DesignWidth="1280"
+      Title="MainPage">
+
+    <Grid Background="AliceBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Button Content="Powrót" Command="{Binding BackToMenuCommand}"></Button>
+        </Grid>
+        <Grid Grid.Row="1">
+            <m:Map x:Name="myPointMap" Center="{Binding Coordinate}" ZoomLevel="18" CredentialsProvider="AtT2UrTEwP_WhkLH_7-iBw1OcAjQLjSZt0T0MxnzjKyCI75Fv5cDbJr5zqc1n3x4" Mode="AerialWithLabels">
+                <m:Pushpin Location="{Binding Coordinate}"></m:Pushpin>
+            </m:Map>
+        </Grid>
+        
+    </Grid>
+    </Page>
+
+
+   

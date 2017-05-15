@@ -65,6 +65,12 @@
                                 RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
                                     CommandParameter="{Binding}" >
                             </Button>
+
+                            <Button Padding="5" Width="30" Height="30" Background="Transparent" Foreground="White" Content="{iconPacks:PackIconFontAwesome Map}"
+                                    Command="{Binding Path=DataContext.GoToMapCommand, 
+                                RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
+                                    CommandParameter="{Binding}" >
+                            </Button>
                         </StackPanel>
                     </Grid>
                 </Grid>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace SpotTerm.Model
         private String _description;
         private PriorityMeet _priority;
         private PriorityStatus _status;
+        private DateTime? _timeStart;
         private DateTime? _timeEnd;
 
         #endregion
@@ -81,6 +83,15 @@ namespace SpotTerm.Model
             }
         }
 
+        public DateTime? TimeStart
+        {
+            get { return _timeStart; }
+            set
+            {
+                SetProperty(ref _timeStart, value);
+                OnPropertyChanged("TimeStart");
+            }
+        }
         #endregion
 
         #region Constructor
@@ -92,6 +103,7 @@ namespace SpotTerm.Model
             _description = description;
             _priority = priority;
             _status = status;
+            _timeStart = DateTime.Now.ToLocalTime();
         }
 
         #endregion
