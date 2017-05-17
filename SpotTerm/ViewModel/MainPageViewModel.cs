@@ -222,9 +222,11 @@ namespace SpotTerm.ViewModel
                             else
                             {
                                 CardList.Add(card);
+                                EventList.Clear();
+                                EventList.Add(new StackEvent(card));
                             }
-                            EventList.Clear();
-                            EventList.Add(new StackEvent(card));
+                   
+                            
                         }
 
                         
@@ -339,24 +341,27 @@ namespace SpotTerm.ViewModel
 
                 if (metroWindow != null)
                 {
-                    controller = await metroWindow.ShowProgressAsync("Usuwanie wpisu", "Trwa usuwanie wpisu..",
-                        false,
-                        new MetroDialogSettings() {AnimateShow = true, ColorScheme = MetroDialogColorScheme.Theme});
-                    await Task.Delay(1100);
+                    var dialogResult = await DialogManager.ShowMessageAsync(metroWindow,
+                        "Uwaga!", "Czy napewno chcesz usunąć wpis?", MessageDialogStyle.AffirmativeAndNegative);
 
-                    if(CardList.Contains((Card) itemObj))
+                    if (dialogResult == MessageDialogResult.Affirmative)
                     {
-                        CardList.Remove((Card)itemObj);
-                        EventHelper.DeleteCardEvent(EventList, (Card)itemObj);
-                    } else
-                    {
-                        CardListCompleted.Remove((Card) itemObj);
+                        controller = await metroWindow.ShowProgressAsync("Usuwanie wpisu", "Trwa usuwanie wpisu..",
+                            false,
+                            new MetroDialogSettings() { AnimateShow = true, ColorScheme = MetroDialogColorScheme.Theme });
+                        await Task.Delay(1100);
+
+                        if (CardList.Contains((Card)itemObj))
+                        {
+                            CardList.Remove((Card)itemObj);
+                            EventHelper.DeleteCardEvent(EventList, (Card)itemObj);
+                        }
+                        else
+                        {
+                            CardListCompleted.Remove((Card)itemObj);
+                        }
                     }
-
-
-
                     
-
                     if (controller != null)
                         await controller.CloseAsync();
                 }

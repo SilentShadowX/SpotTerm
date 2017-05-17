@@ -18,14 +18,6 @@ namespace SpotTerm.Utils
         public static void DeleteCardEvent(ObservableCollection<StackEvent> EventList,
             Card card)
         {
-            //foreach (var current in ToDelete)
-            //{
-                //if (current.ClientName == card.ClientName)
-                //{
-                //    ToDelete.Remove(current);
-                //}
-
-            
                 foreach (var eventCurrent in EventList)
                 {
                     if (eventCurrent.Card.ClientName == card.ClientName)
