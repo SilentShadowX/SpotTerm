@@ -91,10 +91,13 @@
     <Compile Include="Model\DisplayText.cs" />
     <Compile Include="Model\PriorityMeet.cs" />
     <Compile Include="Model\PriorityStatus.cs" />
+    <Compile Include="Model\StackEvent.cs" />
     <Compile Include="Utils\BindableBase.cs" />
     <Compile Include="Utils\Converter\Conventers.cs" />
     <Compile Include="Utils\Converter\NullCheckerConverter.cs" />
+    <Compile Include="Utils\Converter\StatusConv.cs" />
     <Compile Include="Utils\DataParser.cs" />
+    <Compile Include="Utils\EventHelper.cs" />
     <Compile Include="Utils\Navigation.cs" />
     <Compile Include="Utils\PropertySupport.cs" />
     <Compile Include="Utils\RelayCommand.cs" />

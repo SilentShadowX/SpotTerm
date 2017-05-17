@@ -18,6 +18,7 @@ namespace SpotTerm.Model
         private PriorityMeet _priority;
         private PriorityStatus _status;
         private DateTime? _timeStart;
+        private DateTime? _propTime;
         private DateTime? _timeEnd;
 
         #endregion
@@ -92,17 +93,28 @@ namespace SpotTerm.Model
                 OnPropertyChanged("TimeStart");
             }
         }
+
+        public DateTime? PropTime
+        {
+            get { return _propTime; }
+            set
+            {
+                SetProperty(ref _propTime, value);
+                OnPropertyChanged("PropTime");
+            }
+        }
         #endregion
 
         #region Constructor
 
-        public Card(string clientName, string placeName, string description, PriorityMeet priority, PriorityStatus status)
+        public Card(string clientName, string placeName, string description, DateTime? propTime, PriorityMeet priority, PriorityStatus status)
         {
             _clientName = clientName;
             _placeName = placeName;
             _description = description;
             _priority = priority;
             _status = status;
+            _propTime = propTime;
             _timeStart = DateTime.Now.ToLocalTime();
         }
 

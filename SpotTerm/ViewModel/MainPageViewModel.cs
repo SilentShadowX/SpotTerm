@@ -41,11 +41,13 @@ namespace SpotTerm.ViewModel
         private String _clientName;
         private String _placeName;
         private String _description;
+        private DateTime? _propTime;
         private PriorityMeet _priorityMeet;
 
         private ObservableCollection<Card> _cardList;
         private Card _selectedCard;
         private ObservableCollection<Card> _cardListCompleted;
+        private ObservableCollection<StackEvent> _eventList;
 
         #endregion
 
@@ -71,6 +73,12 @@ namespace SpotTerm.ViewModel
         {
             get { return _cardListCompleted; }
             set { _cardListCompleted = value; }
+        }
+
+        public ObservableCollection<StackEvent> EventList
+        {
+            get { return _eventList; }
+            set { _eventList = value; }
         }
 
         public string ClientName
@@ -103,6 +111,16 @@ namespace SpotTerm.ViewModel
             }
         }
 
+        public DateTime? PropTime
+        {
+            get { return _propTime; }
+            set
+            {
+                SetProperty(ref _propTime, value);
+                OnPropertyChanged("PropTime");
+            }
+        }
+
         public PriorityMeet PriorityMeet
         {
             get { return _priorityMeet; }
@@ -121,6 +139,7 @@ namespace SpotTerm.ViewModel
         {
             _cardList = cardList;
             _cardListCompleted = new ObservableCollection<Card>();
+            _eventList = new ObservableCollection<StackEvent>();
             AddCardCommand = new RelayCommand(action => AddCardToList());
             DeleteCardCommand = new RelayCommand(action => DeleteCardFromList(action));
             CompleteCardCommand = new RelayCommand(action => SetCardAsCompleted(action), action => isCompleted(action));
@@ -204,7 +223,11 @@ namespace SpotTerm.ViewModel
                             {
                                 CardList.Add(card);
                             }
+                            EventList.Clear();
+                            EventList.Add(new StackEvent(card));
                         }
+
+                        
                     }
                 }
                 catch (Exception e)
@@ -282,10 +305,15 @@ namespace SpotTerm.ViewModel
                         new MetroDialogSettings() {AnimateShow = true, ColorScheme = MetroDialogColorScheme.Theme});
                     await Task.Delay(1100);
 
-                    CardList.Add(new Card(ClientName, PlaceName, Description, PriorityMeet, PriorityStatus.Progress));
+                    Card card = new Card(ClientName, PlaceName, Description, PropTime, PriorityMeet,
+                        PriorityStatus.Progress);
+                    CardList.Add(card);
+                    EventList.Add(new StackEvent(card));
+
                     ClientName = null;
                     PlaceName = null;
                     Description = null;
+                    PropTime = null;
                     PriorityMeet = PriorityMeet.Low;
 
                     if (controller != null)
@@ -319,10 +347,14 @@ namespace SpotTerm.ViewModel
                     if(CardList.Contains((Card) itemObj))
                     {
                         CardList.Remove((Card)itemObj);
+                        EventHelper.DeleteCardEvent(EventList, (Card)itemObj);
                     } else
                     {
                         CardListCompleted.Remove((Card) itemObj);
                     }
+
+
+
                     
 
                     if (controller != null)
@@ -348,9 +380,10 @@ namespace SpotTerm.ViewModel
                     card.Status = PriorityStatus.Completed;
                     card.TimeEnd = DateTime.Now.ToLocalTime();
 
+                    EventHelper.DeleteCardEvent(EventList, (Card)itemObj);
                     CardListCompleted.Add(card);
                     CardList.Remove(card);
-
+            
                     if (controller != null)
                         await controller.CloseAsync();
                 }

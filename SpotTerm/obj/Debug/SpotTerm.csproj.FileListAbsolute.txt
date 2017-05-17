@@ -71,3 +71,4 @@ C:\Users\Shadow\Documents\SpotTerm\SpotTerm\obj\Debug\View\MapPage.g.cs
 C:\Users\Shadow\Documents\SpotTerm\SpotTerm\bin\Debug\Microsoft.Maps.MapControl.WPF.dll
 C:\Users\Shadow\Documents\SpotTerm\SpotTerm\bin\Debug\Microsoft.Maps.MapControl.WPF.xml
 C:\Users\Shadow\Documents\SpotTerm\SpotTerm\obj\Debug\View\MapPage.baml
+C:\Users\Shadow\Documents\SpotTerm\SpotTerm\obj\Debug\GeneratedInternalTypeHelper.g.cs

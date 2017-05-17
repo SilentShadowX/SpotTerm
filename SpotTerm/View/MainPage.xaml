@@ -14,7 +14,9 @@
       Title="MainPage">
 
     <Page.Resources>
-
+        
+        <converter:StatusConv x:Key="StatusConv"/>
+        
         <ObjectDataProvider 
             x:Key="EnumProrityProvider"
             MethodName="GetValues"
@@ -24,7 +26,15 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
-        <ControlTemplate x:Key="CardControlTemplate" TargetType="ListViewItem">
+        <ControlTemplate x:Key="EventControlTemplate" TargetType="ListViewItem">
+            <Grid Margin="5">
+                <StackPanel>
+                    <TextBlock Text="{Binding EventInfo}" Background="{Binding Status , Converter={StaticResource StatusConv}}" Foreground="Black"></TextBlock>
+                </StackPanel>
+            </Grid>
+        </ControlTemplate>
+
+            <ControlTemplate x:Key="CardControlTemplate" TargetType="ListViewItem">
             <Border BorderBrush="Black" Background="#113B51" Padding="5" BorderThickness="2" CornerRadius="8"
                     Margin="5">
                 <Grid Margin="5">
@@ -35,6 +45,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0" Margin="5">
@@ -73,6 +84,7 @@
                             </Button>
                         </StackPanel>
                     </Grid>
+                   
                 </Grid>
             </Border>
         </ControlTemplate>
@@ -92,6 +104,7 @@
                 <RowDefinition Height="2*" />
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <TextBlock x:Name="InfoBlock" VerticalAlignment="Center" FontSize="24" TextAlignment="Center"
                        Margin="10,10,10,10" TextWrapping="Wrap" Text="Dodaj nowy wpis" Foreground="#6F90A2" />
@@ -105,8 +118,10 @@
                       
                       ItemsSource="{Binding Source={StaticResource EnumProrityProvider}}" 
                       SelectedItem="{Binding Path=PriorityMeet}"/>
+            
+            <Controls:DateTimePicker Grid.Row="5" Margin="10,0.5,10.5,0.5" SelectedDate="{Binding PropTime}"></Controls:DateTimePicker>
 
-            <Button x:Name="AddButton" Content="Zatwierdź" Command="{Binding AddCardCommand}"  Margin="10,10,10,10" Grid.Row="5" Foreground ="AliceBlue" Background="#477187"/>
+            <Button x:Name="AddButton" Content="Zatwierdź" Command="{Binding AddCardCommand}"  Margin="10,10,10,10" Grid.Row="6" Foreground ="AliceBlue" Background="#477187"/>
         </Grid>
 
         <Controls:MetroAnimatedTabControl Grid.Column="0" Background="#6F90A2">
@@ -171,25 +186,17 @@
 
         </Controls:MetroAnimatedTabControl>
         <Button x:Name="load" Command="{Binding LoadFromFile}" Foreground ="AliceBlue" Background="#477187" Content="Załaduj" Grid.Column="1" HorizontalAlignment="Left" Margin="142.4,500,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="save" Command="{Binding SaveFromFile}" Foreground ="AliceBlue" Background="#477187" Content="Zapisz" Grid.Column="1" HorizontalAlignment="Left" Margin="222.4,500,0,0" VerticalAlignment="Top" Width="75"/>
+        
+       <Button x:Name="save" Command="{Binding SaveFromFile}" Foreground ="AliceBlue" Background="#477187" Content="Zapisz" Grid.Column="1" HorizontalAlignment="Left" Margin="222.4,500,0,0" VerticalAlignment="Top" Width="75"/>
+
+        <ListView Grid.Column="1" Margin="28.5,576,26,44" ItemsSource="{Binding EventList}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Template" Value="{StaticResource EventControlTemplate}" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
 
 
     </Grid>
 </Page>
-
-
-<!-- 
-                    <TextBox.Resources>
-                    <converter:NullCheckerConverter x:Key="NullCheckerConverter"/>
-                </TextBox.Resources>
-                <TextBox.Style>
-                    <Style>
-                        <Style.Triggers>
-                            <DataTrigger 
-                                Binding="{Binding SelectedCard.ClientName, Converter={StaticResource NullCheckerConverter}, Mode=TwoWay}" Value="{x:Null}">
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
-    
-    -->
